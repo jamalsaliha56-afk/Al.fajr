@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<link rel="stylesheet" href="style.css">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AL.Faajr Jewellers | Luxury Gold & Diamond Jewellery (الفجر جیولرز)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            100: '#FFF9E6',
+                            300: '#F3E5AB',
+                            400: '#E6CA65',
+                            500: '#D4AF37',
+                            600: '#AA820A',
+                            700: '#856404',
+                            800: '#584200'
+                        },
+                        obsidian: '#0B0B0E',
+                        darkcard: '#141419'
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        nastaliq: ['Noto Nastaliq Urdu', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #08080A;
+            color: #F3F4F6;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .font-urdu {
+            font-family: 'Noto Nastaliq Urdu', serif;
+        }
+
+        /* Golden Gradient Text */
+        .text-gold-gradient {
+            background: linear-gradient(135deg, #FFF099 0%, #D4AF37 50%, #997A15 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Gold Shimmer Button Effect */
+        .btn-gold-shine {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #D4AF37 0%, #AA820A 100%);
+            color: #000;
+            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.25);
+        }
+
+        .btn-gold-shine::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 50%;
+            height: 200%;
+            background: linear-gradient(60deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+            transform: rotate(25deg);
+            transition: all 0.6s ease;
+        }
+
+        .btn-gold-shine:hover::after {
+            left: 120%;
+        }
+
+        .btn-gold-shine:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 6px 25px rgba(212, 175, 55, 0.5);
+        }
+
+        .btn-gold-shine:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        /* Ghost Button Styling */
+        .btn-gold-outline {
+            border: 1px solid #D4AF37;
+            color: #D4AF37;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .btn-gold-outline:hover {
+            background: rgba(212, 175, 55, 0.15);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+            border-color: #FFE082;
+            color: #FFF;
+            transform: translateY(-2px);
+        }
+
+        /* Card Hover Animations & Lighting */
+        .product-card {
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            border: 1px solid rgba(212, 175, 55, 0.18);
+            background: rgba(20, 20, 25, 0.85);
+            backdrop-filter: blur(10px);
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            border-color: rgba(212, 175, 55, 0.7);
+            box-shadow: 0 15px 35px -10px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #08080A;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #332B12;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D4AF37;
+        }
+
+        /* Background Particle Canvas */
+        #particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Toast Animation */
+        @keyframes slideInUp {
+            from {
+                transform: translateY(100%) scale(0.9);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .toast-animate {
+            animation: slideInUp 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-obsidian text-gray-200 min-h-screen relative flex flex-col justify-between selection:bg-gold-500 selection:text-black">
+
+    <!-- Particle Background -->
+    <canvas id="particleCanvas"></canvas>
+
+    <div class="relative z-10 flex-grow flex flex-col">
+        <div
+            class="bg-gradient-to-r from-gold-800 via-gold-600 to-gold-800 text-black text-xs py-1.5 font-semibold text-center tracking-widest uppercase shadow-sm flex items-center justify-center gap-2">
+            <span>✨ مفت انشورڈ ڈیلیوری اور شاہی مخملی ڈبہ تحفہ | Free Worldwide Insured Shipping & Velvet Box ✨</span>
+        </div>
+
+        <!-- MAIN NAVIGATION HEADER -->
+        <header
+            class="sticky top-0 z-50 bg-black/90 backdrop-blur-md border-b border-gold-500/20 transition-all duration-300">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-20">
+
+                    <!-- LOGO -->
+                    <div class="flex items-center space-x-3 cursor-pointer group" onclick="showCategoryView('All')">
+                        <div
+                            class="w-11 h-11 rounded-full border border-gold-500/50 flex items-center justify-center bg-gold-500/10 group-hover:border-gold-400 group-hover:rotate-45 transition-all duration-500 shadow-[0_0_15px_rgba(212,175,55,0.25)]">
+                            <i
+                                class="fa-solid fa-gem text-gold-500 text-xl group-hover:scale-110 transition-transform"></i>
+                        </div>
+                        <div>
+                            <span
+                                class="text-2xl font-serif font-bold text-gold-gradient tracking-wider block leading-none">AL.FAAJR</span>
+                            <span class="text-[10px] tracking-[0.25em] text-gray-400 block mt-1 font-sans">الفجر جیولرز
+                                • LUXURY JEWELLERY</span>
+                        </div>
+                    </div>
+
+                    <!-- DESKTOP NAV LINKS -->
+                    <nav class="hidden md:flex space-x-8 font-medium text-sm tracking-wide items-center">
+                        <a href="#collections" onclick="showCategoryView('All')"
+                            class="hover:text-gold-400 transition-colors duration-200 py-1 border-b-2 border-transparent hover:border-gold-500">All
+                            Jewellery (تمام زیورات)</a>
+
+                        <!-- CATEGORIES DROPDOWN MENU -->
+                        <div class="relative group" id="categoriesDropdownContainer">
+                            <button
+                                class="flex items-center space-x-1 hover:text-gold-400 transition-colors duration-200 py-1 border-b-2 border-transparent group-hover:border-gold-500 focus:outline-none">
+                                <span>Categories (اقسام)</span>
+                                <i
+                                    class="fa-solid fa-chevron-down text-[10px] ml-1 transition-transform group-hover:rotate-180 text-gold-500"></i>
+                            </button>
+                            <div
+                                class="absolute left-0 mt-2 w-64 bg-darkcard/95 border border-gold-500/30 backdrop-blur-xl rounded-2xl shadow-2xl p-2 z-50 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0">
+                                <a href="#collections" onclick="showCategoryView('Rings')"
+                                    class="flex items-center justify-between px-3 py-2 text-xs text-gray-300 hover:text-gold-300 hover:bg-gold-500/10 rounded-xl transition-all">
+                                    <span class="flex items-center"><i class="fa-solid fa-ring text-gold-500 w-6"></i>
+                                        Gold & Diamond Rings</span>
+                                    <span class="text-[10px] text-gold-500/70">انگوٹھیاں</span>
+                                </a>
+                                <a href="#collections" onclick="showCategoryView('Necklaces')"
+                                    class="flex items-center justify-between px-3 py-2 text-xs text-gray-300 hover:text-gold-300 hover:bg-gold-500/10 rounded-xl transition-all">
+                                    <span class="flex items-center"><i class="fa-solid fa-gem text-gold-500 w-6"></i>
+                                        Necklaces & Sets</span>
+                                    <span class="text-[10px] text-gold-500/70">ہار سیٹ</span>
+                                </a>
+                                <a href="#collections" onclick="showCategoryView('Earrings')"
+                                    class="flex items-center justify-between px-3 py-2 text-xs text-gray-300 hover:text-gold-300 hover:bg-gold-500/10 rounded-xl transition-all">
+                                    <span class="flex items-center"><i
+                                            class="fa-solid fa-sparkles text-gold-500 w-6"></i> Royal Earrings</span>
+                                    <span class="text-[10px] text-gold-500/70">جھمکے / باہیا</span>
+                                </a>
+                                <a href="#collections" onclick="showCategoryView('Bracelets')"
+                                    class="flex items-center justify-between px-3 py-2 text-xs text-gray-300 hover:text-gold-300 hover:bg-gold-500/10 rounded-xl transition-all">
+                                    <span class="flex items-center"><i
+                                            class="fa-solid fa-circle-notch text-gold-500 w-6"></i> Bangles &
+                                        Bracelets</span>
+                                    <span class="text-[10px] text-gold-500/70">کڑے / چوڑیاں</span>
+                                </a>
+                                <a href="#collections" onclick="showCategoryView('Bridal')"
+                                    class="flex items-center justify-between px-3 py-2 text-xs text-gold-400 hover:text-gold-300 hover:bg-gold-500/15 rounded-xl transition-all font-semibold">
+                                    <span class="flex items-center"><i class="fa-solid fa-crown text-gold-400 w-6"></i>
+                                        Heritage Bridal Sets</span>
+                                    <span class="text-[10px] text-gold-400">دلہن کے سیٹ</span>
+                                </a>
+                                <a href="#collections" onclick="showCategoryView('Coins')"
+                                    class="flex items-center justify-between px-3 py-2 text-xs text-amber-300 hover:text-amber-200 hover:bg-gold-500/15 rounded-xl transition-all font-semibold">
+                                    <span class="flex items-center"><i class="fa-solid fa-coins text-amber-400 w-6"></i>
+                                        24K Gold Coins & Bars</span>
+                                    <span class="text-[10px] text-amber-400">سونے کے سکے</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <a href="#collections" onclick="showCategoryView('Bridal')"
+                            class="text-gold-400 font-semibold hover:text-gold-300 transition-colors duration-200 py-1 flex items-center gap-1">
+                            <span>Bridal Sets</span>
+                            <i class="fa-solid fa-crown text-xs"></i>
+                        </a>
+                    </nav>
+
+                    <!-- SEARCH, AUTH & CART ACTIONS -->
+                    <div class="flex items-center space-x-4">
+
+                        <!-- Live Search Bar -->
+                        <div class="relative hidden sm:block">
+                            <input type="text" id="searchInput" oninput="handleSearch()"
+                                placeholder="Search gold, rings..."
+                                class="bg-darkcard border border-gold-500/30 rounded-full py-1.5 pl-9 pr-4 text-xs focus:outline-none focus:border-gold-500 w-36 sm:w-48 focus:w-60 transition-all duration-300 text-gray-200 placeholder-gray-500">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-xs text-gold-500"></i>
+                        </div>
+
+                        <!-- USER AUTH BUTTON -->
+                        <div id="userAuthSection" class="relative">
+                            <button id="authBtn" onclick="openAuthModal('signin')"
+                                class="flex items-center space-x-2 bg-darkcard/80 border border-gold-500/30 hover:border-gold-400 px-3 py-1.5 rounded-full text-xs font-semibold text-gold-300 transition-all duration-300">
+                                <i class="fa-regular fa-user text-gold-500"></i>
+                                <span id="authBtnText" class="hidden sm:inline">Sign In</span>
+                            </button>
+                        </div>
+
+                        <!-- Wishlist Counter -->
+                        <button onclick="toggleWishlistModal()"
+                            class="relative p-2 text-gray-300 hover:text-gold-400 transition-colors group"
+                            title="Wishlist">
+                            <i class="fa-regular fa-heart text-xl group-hover:scale-110 transition-transform"></i>
+                            <span id="wishlistBadge"
+                                class="absolute -top-1 -right-1 bg-gradient-to-r from-red-600 to-pink-600 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">0</span>
+                        </button>
+
+                        <div class="relative group" id="cartContainer">
+                            <button id="cartBtn" onclick="toggleCartDropdown()"
+                                class="flex items-center space-x-2 bg-darkcard border border-gold-500/40 hover:border-gold-400 px-3.5 py-1.5 rounded-full transition-all duration-300 shadow-md">
+                                <div class="relative">
+                                    <i class="fa-solid fa-bag-shopping text-gold-500 text-base"></i>
+                                    <span id="cartBadge"
+                                        class="absolute -top-2 -right-2 bg-gold-500 text-black text-[10px] font-extrabold rounded-full w-4 h-4 flex items-center justify-center">0</span>
+                                </div>
+                                <span id="cartTotalHeader"
+                                    class="text-xs font-semibold text-gold-300 hidden lg:inline">Rs. 0</span>
+                            </button>
+
+                            <!-- CART DROPDOWN -->
+                            <div id="cartDropdown"
+                                class="hidden absolute right-0 mt-3 w-80 sm:w-96 bg-darkcard/95 border border-gold-500/30 backdrop-blur-xl rounded-2xl shadow-2xl p-4 z-50 transition-all duration-300 opacity-0 transform scale-95 origin-top-right">
+                                <div class="flex justify-between items-center pb-3 border-b border-gray-800">
+                                    <h3 class="font-serif font-bold text-gold-400 text-lg flex items-center gap-2">
+                                        <i class="fa-solid fa-gem text-xs"></i> Shopping Bag (شاپنگ بیگ)
+                                    </h3>
+                                    <span id="cartCountDropdownText" class="text-xs text-gray-400">0 Items</span>
+                                </div>
+
+                                <div id="cartItemsList" class="max-h-72 overflow-y-auto my-3 space-y-3 pr-1">
+                                    <div class="text-center py-8 text-gray-500 text-xs">
+                                        <i class="fa-solid fa-basket-shopping text-3xl text-gray-700 mb-2"></i>
+                                        <p>Your cart is empty.</p>
+                                    </div>
+                                </div>
+
+                                <div class="border-t border-gray-800 pt-3 space-y-3">
+                                    <div class="flex justify-between items-center text-sm">
+                                        <span class="text-gray-400">Subtotal Total</span>
+                                        <span id="cartSubtotal" class="font-serif font-bold text-gold-400 text-base">Rs.
+                                            0</span>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <button onclick="clearCart()"
+                                            class="btn-gold-outline text-xs py-2 rounded-lg font-medium">
+                                            Clear All
+                                        </button>
+                                        <button onclick="openCheckoutModal()"
+                                            class="btn-gold-shine text-xs py-2 rounded-lg font-bold">
+                                            Checkout <i class="fa-solid fa-arrow-right ml-1"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="relative py-12 lg:py-16 overflow-hidden border-b border-gold-500/10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+
+                    <div class="space-y-6 text-center lg:text-left">
+                        <div
+                            class="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full border border-gold-500/30 bg-gold-500/10 text-gold-400 text-xs tracking-widest uppercase">
+                            <i class="fa-solid fa-sparkles"></i>
+                            <span>Pure 22K & 24K Gold • 100% Certified Diamonds</span>
+                        </div>
+                        <h1 class="text-3xl sm:text-5xl font-serif font-bold tracking-tight text-white leading-tight">
+                            شاهکار زیورات کا مرکز <br>
+                            <span class="text-gold-gradient">AL.FAAJR Luxury Jewellers</span>
+                        </h1>
+                        <p class="text-gray-400 text-xs sm:text-sm max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                            Discover exquisite bridal sets, certified diamond solitaire rings, royal gold bangles, and
+                            authentic gold bullion bars crafted with perfection since 1994.
+                        </p>
+
+                        <div class="flex flex-wrap gap-4 justify-center lg:justify-start pt-2">
+                            <a href="#collections" onclick="showCategoryView('All')"
+                                class="btn-gold-shine px-7 py-3 rounded-full text-xs sm:text-sm font-bold flex items-center gap-2">
+                                Explore 4x4 Grid Collection <i class="fa-solid fa-gem"></i>
+                            </a>
+                            <button onclick="showCategoryView('Bridal')"
+                                class="btn-gold-outline px-6 py-3 rounded-full text-xs sm:text-sm font-semibold flex items-center gap-2">
+                                Bridal Gallery (دلہن کلیکشن) <i class="fa-solid fa-crown"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="relative flex justify-center">
+                        <div
+                            class="w-64 sm:w-80 h-64 sm:h-80 rounded-full bg-gradient-to-tr from-gold-600/20 via-gold-400/5 to-transparent absolute -z-10 blur-3xl">
+                        </div>
+                        <div class="relative group cursor-pointer" onclick="quickView(1)">
+                            <div
+                                class="relative z-10 w-72 sm:w-88 h-72 sm:h-88 rounded-3xl overflow-hidden border border-gold-500/40 p-3 bg-darkcard/80 shadow-2xl backdrop-blur-sm group-hover:border-gold-400 transition-all duration-500">
+                                <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=800&q=80"
+                                    alt="Royal Solitaire Ring"
+                                    class="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-700">
+                                <div
+                                    class="absolute bottom-5 left-5 right-5 bg-black/85 backdrop-blur-md border border-gold-500/30 rounded-xl p-3 flex justify-between items-center">
+                                    <div>
+                                        <p class="text-[10px] text-gold-400 font-serif font-bold">Featured Spotlight</p>
+                                        <p class="text-white text-xs font-bold">Royal Solitaire Diamond Ring</p>
+                                    </div>
+                                    <span class="text-gold-300 font-serif font-bold text-xs">Rs. 485,000</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="collections" class="py-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex-grow">
+
+            <!-- User Welcome Banner -->
+            <div id="welcomeBanner"
+                class="hidden mb-6 p-4 rounded-2xl bg-gradient-to-r from-gold-900/40 via-darkcard to-gold-900/40 border border-gold-500/30 flex justify-between items-center backdrop-blur-md">
+                <div class="flex items-center space-x-3">
+                    <div
+                        class="w-10 h-10 rounded-full bg-gold-500/20 border border-gold-500/50 flex items-center justify-center text-gold-400 font-bold font-serif text-lg">
+                        <span id="userAvatarChar">U</span>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-serif font-bold text-gold-gradient">Welcome Back, <span
+                                id="userNameGreeting">Valued Customer</span>!</h3>
+                        <p class="text-xs text-gray-400">Enjoy VIP discount rates & insured complimentary shipping.</p>
+                    </div>
+                </div>
+                <button onclick="logoutUser()"
+                    class="text-xs text-gray-400 hover:text-red-400 underline transition-colors px-3 py-1">
+                    Sign Out <i class="fa-solid fa-right-from-bracket ml-1"></i>
+                </button>
+            </div>
+
+            <!-- Dynamic Category Navigation Breadcrumbs Header -->
+            <div id="categoryHeader"
+                class="hidden mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-darkcard/60 border border-gold-500/20">
+                <div>
+                    <nav class="flex items-center space-x-2 text-xs text-gray-400 mb-1">
+                        <a href="#collections" onclick="showCategoryView('All')"
+                            class="hover:text-gold-400 transition-colors">Home</a>
+                        <span>/</span>
+                        <span>Categories</span>
+                        <span>/</span>
+                        <span id="breadcrumbCategoryName" class="text-gold-400 font-semibold">Category</span>
+                    </nav>
+                    <h2 class="text-2xl font-serif font-bold text-white flex items-center gap-2">
+                        <span id="activeCategoryTitle" class="text-gold-gradient">Category</span> Collection
+                    </h2>
+                </div>
+                <button onclick="showCategoryView('All')"
+                    class="btn-gold-outline text-xs px-4 py-2 rounded-full flex items-center gap-2 self-start sm:self-auto">
+                    <i class="fa-solid fa-arrow-left"></i> View All Jewellery
+                </button>
+            </div>
+
+            <!-- Header and Filter Controls -->
+            <div
+                class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4 border-b border-gray-800 pb-5">
+                <div>
+                    <h2 id="mainSectionTitle"
+                        class="text-2xl sm:text-3xl font-serif font-bold text-white flex items-center gap-2">
+                        <span class="text-gold-gradient">AL.Faajr</span> Luxury Gold Showcase
+                    </h2>
+                    <p class="text-xs text-gray-400 mt-1">Full Product Catalog • Displayed in strict 4x4 Grid layout</p>
+                </div>
+
+                <!-- CATEGORY FILTER BUTTONS -->
+                <div class="flex flex-wrap gap-2 justify-center" id="categoryFilters">
+                    <button onclick="showCategoryView('All')"
+                        class="filter-btn active bg-gold-500 text-black px-4 py-1.5 rounded-full text-xs font-bold transition-all shadow-md">All
+                        (تمام)</button>
+                    <button onclick="showCategoryView('Rings')"
+                        class="filter-btn bg-darkcard text-gray-300 hover:text-gold-400 border border-gold-500/20 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all">Rings</button>
+                    <button onclick="showCategoryView('Necklaces')"
+                        class="filter-btn bg-darkcard text-gray-300 hover:text-gold-400 border border-gold-500/20 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all">Necklaces</button>
+                    <button onclick="showCategoryView('Earrings')"
+                        class="filter-btn bg-darkcard text-gray-300 hover:text-gold-400 border border-gold-500/20 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all">Earrings</button>
+                    <button onclick="showCategoryView('Bracelets')"
+                        class="filter-btn bg-darkcard text-gray-300 hover:text-gold-400 border border-gold-500/20 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all">Bangles</button>
+                    <button onclick="showCategoryView('Bridal')"
+                        class="filter-btn bg-darkcard text-gray-300 hover:text-gold-400 border border-gold-500/20 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all">Bridal</button>
+                    <button onclick="showCategoryView('Coins')"
+                        class="filter-btn bg-darkcard text-gray-300 hover:text-gold-400 border border-gold-500/20 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all">Coins
+                        & Bars</button>
+                </div>
+            </div>
+
+            <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- JavaScript renders product cards here in 4 columns -->
+            </div>
+        </section>
+
+        <!-- AUTHENTICATION MODAL -->
+        <div id="authModal"
+            class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+            <div
+                class="bg-darkcard border border-gold-500/40 rounded-3xl max-w-md w-full p-6 sm:p-8 relative shadow-2xl overflow-hidden">
+                <button onclick="closeAuthModal()"
+                    class="absolute top-4 right-4 text-gray-400 hover:text-gold-400 text-xl w-8 h-8 rounded-full flex items-center justify-center bg-black/40">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+                <div class="flex border-b border-gray-800 mb-6">
+                    <button id="tabSignIn" onclick="switchAuthTab('signin')"
+                        class="flex-1 pb-3 text-sm font-serif font-bold text-gold-400 border-b-2 border-gold-500 transition-all text-center">
+                        Sign In (لاگ ان)
+                    </button>
+                    <button id="tabSignUp" onclick="switchAuthTab('signup')"
+                        class="flex-1 pb-3 text-sm font-serif font-bold text-gray-500 border-b-2 border-transparent transition-all text-center">
+                        Register Account
+                    </button>
+                </div>
+
+                
+                <form id="signInForm" class="space-y-4" action="signin.php" method="POST">
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1">
+                        </label>
+
+                        <input type="email" id="signInEmail" name="email" required placeholder="name@example.com"
+                            class="w-full bg-black/50 border border-gold-500/30 rounded-xl py-2.5 px-3 text-sm focus:outline-none focus:border-gold-500 text-gray-200">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1">
+                        </label>
+
+                        <input type="password" id="signInPassword" name="password" required placeholder="Your password"
+                            class="w-full bg-black/50 border border-gold-500/30 rounded-xl py-2.5 px-3 text-sm focus:outline-none focus:border-gold-500 text-gray-200">
+                    </div>
+
+                    <button type="submit"
+                        class="w-full btn-gold-shine py-3 rounded-xl font-bold text-sm tracking-wide mt-2">
+
+                          <i class="fa-solid fa-right-to-bracket ml-1"></i>
+
+                    </button>
+
+                </form>
+                
+
+
+                <form id="signUpForm" class="space-y-4 hidden" action="singup.php" method="POST">
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1">
+                        </label>
+
+                        <input type="text" id="signUpName" name="username" required placeholder="e.g. Princess Fatima"
+                            class="w-full bg-black/50 border border-gold-500/30 rounded-xl py-2.5 px-3 text-sm focus:outline-none focus:border-gold-500 text-gray-200">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1">
+                            Email Address
+                        </label>
+
+                        <input type="email" id="signUpEmail" name="email" required placeholder="name@example.com"
+                            class="w-full bg-black/50 border border-gold-500/30 rounded-xl py-2.5 px-3 text-sm focus:outline-none focus:border-gold-500 text-gray-200">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1">
+                            Password
+                        </label>
+
+                        <input type="password" id="signUpPassword" name="password" required minlength="6"
+                            placeholder="At least 6 characters"
+                            class="w-full bg-black/50 border border-gold-500/30 rounded-xl py-2.5 px-3 text-sm focus:outline-none focus:border-gold-500 text-gray-200">
+                    </div>
+
+                    <button type="submit"
+                        class="w-full btn-gold-shine py-3 rounded-xl font-bold text-sm tracking-wide mt-2">
+
+                        Create Royal Account
+                        <i class="fa-solid fa-user-plus ml-1"></i>
+
+                    </button>
+
+                </form>
+
+
+            </div>
+        </div>
+
+        <!-- QUICK VIEW MODAL -->
+        <div id="quickViewModal"
+            class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+            <div
+                class="bg-darkcard border border-gold-500/30 rounded-3xl max-w-2xl w-full p-6 relative shadow-2xl overflow-hidden text-gray-200">
+                <button onclick="closeQuickView()"
+                    class="absolute top-4 right-4 text-gray-400 hover:text-gold-400 text-xl w-8 h-8 rounded-full flex items-center justify-center bg-black/40">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <div id="quickViewContent" class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <!-- Quick View rendered dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <!-- CHECKOUT MODAL -->
+        <div id="checkoutModal"
+            class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+            <div
+                class="bg-darkcard border border-gold-500/40 rounded-3xl max-w-lg w-full p-6 sm:p-8 relative shadow-2xl">
+                <button onclick="closeCheckoutModal()"
+                    class="absolute top-4 right-4 text-gray-400 hover:text-gold-400 text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+                <h3 class="text-2xl font-serif font-bold text-gold-gradient mb-1">Complete Order (آرڈر مکمل کریں)</h3>
+                <p class="text-xs text-gray-400 mb-6">AL.Faajr Jewellers Insured Home Delivery</p>
+
+                <form id="checkoutForm" onsubmit="processCheckout(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1">Faull Name</label>
+                        <input type="text" id="checkoutName" required placeholder="e.g. Haji Muhammad Ali"
+                            class="w-full bg-black/50 border border-gold-500/30 rounded-xl py-2 px-3 text-sm focus:outline-none focus:border-gold-500 text-gray-200">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1">Phone / WhatsApp Number</label>
+                        <input type="tel" required placeholder="+92 300 1234567"
+                            class="w-full bg-black/50 border border-gold-500/30 rounded-xl py-2 px-3 text-sm focus:outline-none focus:border-gold-500 text-gray-200">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1">Delivery Address</label>
+                        <textarea required rows="2" placeholder="Full address with city"
+                            class="w-full bg-black/50 border border-gold-500/30 rounded-xl py-2 px-3 text-sm focus:outline-none focus:border-gold-500 text-gray-200"></textarea>
+                    </div>
+
+                    <div class="bg-black/40 p-4 rounded-xl border border-gold-500/20 space-y-2 text-xs">
+                        <div class="flex justify-between text-gray-400">
+                            <span>Total Items:</span>
+                            <span id="checkoutItemCount" class="text-white font-bold">0</span>
+                        </div>
+                        <div class="flex justify-between text-gray-400">
+                            <span>Insured Delivery:</span>
+                            <span class="text-gold-400 font-bold">FREE (مفت)</span>
+                        </div>
+                        <div class="flex justify-between text-sm text-white pt-2 border-t border-gray-800">
+                            <span class="font-bold">Total Payable:</span>
+                            <span id="checkoutGrandTotal" class="text-gold-400 font-serif font-bold text-base">Rs.
+                                0</span>
+                        </div>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full btn-gold-shine py-3 rounded-xl font-bold text-sm tracking-wide mt-2">
+                        Confirm & Place Order <i class="fa-solid fa-check-circle ml-1"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-3 pointer-events-none"></div>
+
+        <!-- FOOTER -->
+        <footer class="bg-black border-t border-gold-500/20 py-10 relative z-10 mt-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                    <div>
+                        <span
+                            class="text-2xl font-serif font-bold text-gold-gradient tracking-wider block">AL.FAAJR</span>
+                        <p class="text-xs text-gray-500 mt-2 leading-relaxed">الفجر جیولرز - High Carat Gold, Certified
+                            Diamond Sets & Royal Heritage Bridal Collections since 1994.</p>
+                    </div>
+                    <div>
+                        <h4 class="text-gold-400 font-serif font-semibold text-sm mb-3">Categories</h4>
+                        <ul class="space-y-1.5 text-xs text-gray-400">
+                            <li><a href="#collections" onclick="showCategoryView('Rings')"
+                                    class="hover:text-gold-300">Gold & Diamond Rings</a></li>
+                            <li><a href="#collections" onclick="showCategoryView('Necklaces')"
+                                    class="hover:text-gold-300">Royal Necklaces</a></li>
+                            <li><a href="#collections" onclick="showCategoryView('Earrings')"
+                                    class="hover:text-gold-300">Bridal Earrings</a></li>
+                            <li><a href="#collections" onclick="showCategoryView('Bridal')"
+                                    class="hover:text-gold-300">Heritage Sets</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-gold-400 font-serif font-semibold text-sm mb-3">Customer Service</h4>
+                        <ul class="space-y-1.5 text-xs text-gray-400">
+                            <li><a href="#" class="hover:text-gold-300">100% Gold Guarantee</a></li>
+                            <li><a href="#" class="hover:text-gold-300">Daily Gold Rate Updates</a></li>
+                            <li><a href="#" class="hover:text-gold-300">Insured Delivery Across Pakistan</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-gold-400 font-serif font-semibold text-sm mb-3">Contact Boutique</h4>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            <i class="fa-solid fa-location-dot text-gold-500 mr-2"></i> Suite 405, Gold Market, Lahore,
+                            Pakistan<br>
+                            <i class="fa-solid fa-phone text-gold-500 mr-2 mt-2"></i> +92 (42) 3578-9000<br>
+                            <i class="fa-solid fa-envelope text-gold-500 mr-2 mt-2"></i> info@alfaajrjewellers.com
+                        </p>
+                    </div>
+                </div>
+                <div
+                    class="border-t border-gray-900 pt-6 text-center text-xs text-gray-600 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <p>&copy; 2026 AL.Faajr Jewellers (الفجر جیولرز). All Rights Reserved.</p>
+                    <div class="flex space-x-4 text-gold-500/70 text-sm">
+                        <a href="#" class="hover:text-gold-400"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="hover:text-gold-400"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="#" class="hover:text-gold-400"><i class="fa-brands fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // EXPANDED 16+ ITEM PRODUCT CATALOG (4x4 GRID DISPLAY)
+        const products = [
+            {
+                id: 1,
+                name: "Royal Solitaire Diamond Ring",
+                urduName: "سولیٹیئر ڈائمنڈ انگوٹھی",
+                category: "Rings",
+                price: 485000,
+                karat: "18K Gold + VVS1 Diamond",
+                rating: 5.0,
+                reviews: 24,
+                badge: "Best Seller",
+                image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=600&q=80",
+                description: "Hand-set brilliant solitaire diamond mounted on a solid 18K gold band."
+            },
+            {
+                id: 2,
+                name: "22K Mughal Gold Kundan Ring",
+                urduName: "کنڈن گولڈ انگوٹھی",
+                category: "Rings",
+                price: 195000,
+                karat: "22K Gold",
+                rating: 4.9,
+                reviews: 18,
+                badge: "Heritage",
+                image: "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=600&q=80",
+                description: "Authentic Mughal-inspired Kundan craftsmanship infused with real rubies."
+            },
+            {
+                id: 3,
+                name: "Emerald Cut Diamond Eternity Ring",
+                urduName: "زمرد ڈائمنڈ انگوٹھی",
+                category: "Rings",
+                price: 340000,
+                karat: "18K White Gold",
+                rating: 4.8,
+                reviews: 12,
+                badge: "New",
+                image: "https://images.unsplash.com/photo-1598560917505-59a3ad559071?auto=format&fit=crop&w=600&q=80",
+                description: "Seamless ring of emerald-cut diamonds designed for eternal brilliance."
+            },
+            {
+                id: 4,
+                name: "Royal Gold Filigree Crown Ring",
+                urduName: "شاہی گولڈ کراؤن انگوٹھی",
+                category: "Rings",
+                price: 145000,
+                karat: "22K Pure Gold",
+                rating: 4.9,
+                reviews: 31,
+                badge: "Popular",
+                image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=600&q=80",
+                description: "Handworked gold filigree crown motif representing royal elegance."
+            },
+            {
+                id: 5,
+                name: "Shahzadi Emerald Diamond Necklace",
+                urduName: "شہزادی زمرد سیٹ",
+                category: "Necklaces",
+                price: 1250000,
+                karat: "22K Gold & Colombian Emerald",
+                rating: 5.0,
+                reviews: 15,
+                badge: "Luxury Masterpiece",
+                image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=600&q=80",
+                description: "High-carat gold necklace adorned with vibrant Colombian emerald drops."
+            },
+            {
+                id: 6,
+                name: "24K Classic Choker Necklace Set",
+                urduName: "چوکر ہار سیٹ",
+                category: "Necklaces",
+                price: 890000,
+                karat: "24K Fine Gold",
+                rating: 4.9,
+                reviews: 28,
+                badge: "24K Gold",
+                image: "https://images.unsplash.com/photo-1611591475196-8575a74e5030?auto=format&fit=crop&w=600&q=80",
+                description: "Traditional solid 24K gold choker handcrafted by master artisans."
+            },
+            {
+                id: 7,
+                name: "Diamond Floral Drops Necklace",
+                urduName: "ڈائمنڈ پھولدار ہار",
+                category: "Necklaces",
+                price: 670000,
+                karat: "18K Gold",
+                rating: 4.8,
+                reviews: 19,
+                badge: "Trending",
+                image: "https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?auto=format&fit=crop&w=600&q=80",
+                description: "Intertwined floral gold vines embedded with luminous round diamonds."
+            },
+            {
+                id: 8,
+                name: "Royal Polki Diamond Pearl Choker",
+                urduName: "پولکی ڈائمنڈ پرل ہار",
+                category: "Necklaces",
+                price: 980000,
+                karat: "22K Gold & Natural Pearls",
+                rating: 5.0,
+                reviews: 42,
+                badge: "Bridal Pick",
+                image: "https://images.unsplash.com/photo-1611591475194-441d3c0b5f13?auto=format&fit=crop&w=600&q=80",
+                description: "Uncut polki diamonds paired with rare natural South Sea pearls."
+            },
+            {
+                id: 9,
+                name: "Traditional Chandbali Gold Jhumkas",
+                urduName: "چاند بالی گولڈ جھمکے",
+                category: "Earrings",
+                price: 240000,
+                karat: "22K Pure Gold",
+                rating: 4.9,
+                reviews: 50,
+                badge: "Bestseller",
+                image: "https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=600&q=80",
+                description: "Ornate crescent chandbali earrings featuring delicate golden fringe drops."
+            },
+            {
+                id: 10,
+                name: "Solitaire Diamond Stud Earrings",
+                urduName: "سولیٹیئر ڈائمنڈ باہیا",
+                category: "Earrings",
+                price: 310000,
+                karat: "18K White Gold",
+                rating: 5.0,
+                reviews: 33,
+                badge: "Classic",
+                image: "https://images.unsplash.com/photo-1635767798638-3e25273a8236?auto=format&fit=crop&w=600&q=80",
+                description: "Timeless 1-carat total weight diamond studs set in white gold."
+            },
+            {
+                id: 11,
+                name: "Gold & Ruby Heritage Jhumkas",
+                urduName: "یاقوت و گولڈ جھمکے",
+                category: "Earrings",
+                price: 215000,
+                karat: "22K Gold",
+                rating: 4.8,
+                reviews: 21,
+                badge: "Royal",
+                image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=600&q=80",
+                description: "Handcarved bell jhumkas with ruby accents and micro gold beads."
+            },
+            {
+                id: 12,
+                name: "22K Gold Filigree Kara (Pair)",
+                urduName: "شاہی گولڈ کڑے (جوڑا)",
+                category: "Bracelets",
+                price: 520000,
+                karat: "22K Pure Gold",
+                rating: 5.0,
+                reviews: 29,
+                badge: "Top Rated",
+                image: "https://images.unsplash.com/photo-1611591475191-032c51ebdd2f?auto=format&fit=crop&w=600&q=80",
+                description: "Pair of heavy traditional gold karas with intricate floral carvings."
+            },
+            {
+                id: 13,
+                name: "Diamond Cluster Tennis Bracelet",
+                urduName: "ڈائمنڈ ٹینس بریسلیٹ",
+                category: "Bracelets",
+                price: 610000,
+                karat: "18K White Gold",
+                rating: 4.9,
+                reviews: 14,
+                badge: "Exclusive",
+                image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=600&q=80",
+                description: "Fluid lineup of brilliant-cut diamonds with secure double clasp."
+            },
+            {
+                id: 14,
+                name: "Al-Faajr Empress Bridal Set",
+                urduName: "الفجر ایمپریس دلہن سیٹ",
+                category: "Bridal",
+                price: 2850000,
+                karat: "22K Gold Complete Set",
+                rating: 5.0,
+                reviews: 48,
+                badge: "Bridal Special",
+                image: "https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?auto=format&fit=crop&w=600&q=80",
+                description: "Complete royal bridal collection including heavy choker, long maala, jhumkas, matha patti, and jhumar."
+            },
+            {
+                id: 15,
+                name: "24K Gold Bar (1 Tola / 11.66g)",
+                urduName: "۲۴ کیرٹ سونا بسکُٹ (۱ تولہ)",
+                category: "Coins",
+                price: 282000,
+                karat: "999.9 Fine 24K Gold",
+                rating: 5.0,
+                reviews: 95,
+                badge: "Bullion",
+                image: "https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&w=600&q=80",
+                description: "Certified pure 24K gold investment bar in tamper-proof seal."
+            },
+            {
+                id: 16,
+                name: "24K Commemorative Gold Coin (10g)",
+                urduName: "۲۴ کیرٹ سونے کا سکہ",
+                category: "Coins",
+                price: 242000,
+                karat: "999.9 Fine Gold",
+                rating: 5.0,
+                reviews: 80,
+                badge: "Investment",
+                image: "https://images.unsplash.com/photo-1610375461369-d613b564f4c4?auto=format&fit=crop&w=600&q=80",
+                description: "High-relief stamped 24K gold coin with Al.Faajr seal of authenticity."
+            }
+        ];
+
+        let cart = [];
+        let wishlist = [];
+        let currentCategory = 'All';
+        let currentUser = null;
+
+        // FORMAT CURRENCY PKR
+        function formatPrice(amount) {
+            return 'Rs. ' + amount.toLocaleString('en-PK');
+        }
+
+        // RENDER PRODUCTS IN STRICT 4x4 GRID
+        function renderProducts(itemsToRender) {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
+
+            if (itemsToRender.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-1 sm:col-span-2 lg:col-span-4 text-center py-16 bg-darkcard/50 rounded-3xl border border-gold-500/20">
+                        <i class="fa-solid fa-gem text-4xl text-gray-600 mb-3"></i>
+                        <p class="text-gray-400 font-serif text-lg">No jewellery items found matching your criteria.</p>
+                        <button onclick="showCategoryView('All')" class="btn-gold-shine px-6 py-2 rounded-full text-xs mt-4">Show All Items</button>
+                    </div>
+                `;
+                return;
+            }
+
+            itemsToRender.forEach(product => {
+                const isWishlisted = wishlist.includes(product.id);
+                const card = document.createElement('div');
+                card.className = "product-card rounded-2xl overflow-hidden group flex flex-col justify-between";
+
+                card.innerHTML = `
+                    <div>
+                        <!-- IMAGE & BADGES CONTAINER -->
+                        <div class="relative h-60 overflow-hidden bg-black/40">
+                            <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            
+                            <div class="absolute top-3 left-3 flex flex-col gap-1">
+                                <span class="bg-black/70 backdrop-blur-md text-gold-400 border border-gold-500/30 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+                                    ${product.karat}
+                                </span>
+                                ${product.badge ? `<span class="bg-gold-500 text-black text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider">${product.badge}</span>` : ''}
+                            </div>
+
+                            <button onclick="toggleWishlist(${product.id})" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/60 backdrop-blur-md border border-gold-500/30 text-gray-300 hover:text-red-500 flex items-center justify-center transition-all ${isWishlisted ? 'text-red-500 bg-red-500/20' : ''}">
+                                <i class="${isWishlisted ? 'fa-solid' : 'fa-regular'} fa-heart text-xs"></i>
+                            </button>
+
+                            <button onclick="quickView(${product.id})" class="absolute bottom-3 right-3 bg-black/80 backdrop-blur-md text-gold-300 hover:text-white border border-gold-500/30 text-[11px] font-medium px-3 py-1.5 rounded-xl opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0">
+                                <i class="fa-solid fa-eye mr-1"></i> Quick View
+                            </button>
+                        </div>
+
+                        <!-- CARD CONTENT -->
+                        <div class="p-4 space-y-2">
+                            <div class="flex items-center justify-between text-[11px] text-gray-400">
+                                <span>${product.category}</span>
+                                <span class="text-gold-400 font-bold"><i class="fa-solid fa-star text-xs"></i> ${product.rating} (${product.reviews})</span>
+                            </div>
+
+                            <h3 class="font-serif font-bold text-gray-100 text-sm group-hover:text-gold-300 transition-colors line-clamp-1">${product.name}</h3>
+                            <p class="text-[11px] text-gold-500/80 font-urdu tracking-wide">${product.urduName}</p>
+                            
+                            <p class="text-gold-400 font-serif font-bold text-base pt-1">${formatPrice(product.price)}</p>
+                        </div>
+                    </div>
+
+                    <!-- CARD FOOTER BUTTON -->
+                    <div class="p-4 pt-0">
+                        <button onclick="addToCart(${product.id})" class="w-full btn-gold-shine py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-bag-shopping"></i> Add to Cart (ٹوکری میں ڈالیں)
+                        </button>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        // CATEGORY SWITCHING & BREADCRUMB UPDATE
+        function showCategoryView(cat) {
+            currentCategory = cat;
+            const categoryHeader = document.getElementById('categoryHeader');
+            const breadcrumbCategoryName = document.getElementById('breadcrumbCategoryName');
+            const activeCategoryTitle = document.getElementById('activeCategoryTitle');
+
+            if (cat !== 'All') {
+                categoryHeader.classList.remove('hidden');
+                breadcrumbCategoryName.innerText = cat;
+                activeCategoryTitle.innerText = cat;
+            } else {
+                categoryHeader.classList.add('hidden');
+            }
+
+            const buttons = document.querySelectorAll('#categoryFilters button');
+            buttons.forEach(btn => {
+                if (btn.innerText.trim().toLowerCase().includes(cat.toLowerCase()) || (cat === 'All' && btn.innerText.trim().startsWith('All'))) {
+                    btn.className = "filter-btn active bg-gold-500 text-black px-4 py-1.5 rounded-full text-xs font-bold transition-all shadow-md";
+                } else {
+                    btn.className = "filter-btn bg-darkcard text-gray-300 hover:text-gold-400 border border-gold-500/20 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all";
+                }
+            });
+
+            const filtered = cat === 'All' ? products : products.filter(p => p.category.toLowerCase() === cat.toLowerCase());
+            renderProducts(filtered);
+
+            const target = document.getElementById('collections');
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // LIVE SEARCH FILTER
+        function handleSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = products.filter(p =>
+                p.name.toLowerCase().includes(query) ||
+                p.category.toLowerCase().includes(query) ||
+                p.karat.toLowerCase().includes(query)
+            );
+            renderProducts(filtered);
+        }
+
+        // CART LOGIC & DROPDOWN RENDER
+        function addToCart(productId) {
+            const prod = products.find(p => p.id === productId);
+            const existing = cart.find(item => item.id === productId);
+
+            if (existing) {
+                existing.qty++;
+            } else {
+                cart.push({ ...prod, qty: 1 });
+            }
+
+            updateCartUI();
+            showToast("Added to Shopping Bag ✨", `${prod.name} has been added.`);
+        }
+
+        function updateCartQty(productId, delta) {
+            const item = cart.find(i => i.id === productId);
+            if (item) {
+                item.qty += delta;
+                if (item.qty <= 0) {
+                    cart = cart.filter(i => i.id !== productId);
+                }
+            }
+            updateCartUI();
+        }
+
+        function clearCart() {
+            cart = [];
+            updateCartUI();
+            showToast("Bag Cleared", "All items removed from shopping bag.");
+        }
+
+        function updateCartUI() {
+            const cartBadge = document.getElementById('cartBadge');
+            const cartTotalHeader = document.getElementById('cartTotalHeader');
+            const cartItemsList = document.getElementById('cartItemsList');
+            const cartSubtotal = document.getElementById('cartSubtotal');
+            const cartCountDropdownText = document.getElementById('cartCountDropdownText');
+
+            const totalItems = cart.reduce((acc, item) => acc + item.qty, 0);
+            const subtotal = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+
+            cartBadge.innerText = totalItems;
+            cartCountDropdownText.innerText = `${totalItems} Items`;
+            cartTotalHeader.innerText = formatPrice(subtotal);
+            cartSubtotal.innerText = formatPrice(subtotal);
+
+            if (cart.length === 0) {
+                cartItemsList.innerHTML = `
+                    <div class="text-center py-8 text-gray-500 text-xs">
+                        <i class="fa-solid fa-basket-shopping text-3xl text-gray-700 mb-2"></i>
+                        <p>Your shopping bag is empty.</p>
+                    </div>
+                `;
+            } else {
+                cartItemsList.innerHTML = '';
+                cart.forEach(item => {
+                    const row = document.createElement('div');
+                    row.className = "flex items-center gap-3 bg-black/40 p-2.5 rounded-xl border border-gold-500/20";
+                    row.innerHTML = `
+                        <img src="${item.image}" class="w-12 h-12 object-cover rounded-lg border border-gold-500/30">
+                        <div class="flex-grow min-w-0">
+                            <h4 class="text-xs font-bold text-gray-200 truncate">${item.name}</h4>
+                            <p class="text-[11px] text-gold-400 font-bold">${formatPrice(item.price)}</p>
+                        </div>
+                        <div class="flex items-center gap-1.5 bg-darkcard border border-gold-500/30 rounded-lg px-2 py-1 text-xs">
+                            <button onclick="updateCartQty(${item.id}, -1)" class="text-gray-400 hover:text-white px-1">-</button>
+                            <span class="font-bold text-gold-300">${item.qty}</span>
+                            <button onclick="updateCartQty(${item.id}, 1)" class="text-gray-400 hover:text-white px-1">+</button>
+                        </div>
+                    `;
+                    cartItemsList.appendChild(row);
+                });
+            }
+        }
+
+        function toggleCartDropdown() {
+            const dropdown = document.getElementById('cartDropdown');
+            if (dropdown.classList.contains('hidden')) {
+                dropdown.classList.remove('hidden');
+                setTimeout(() => {
+                    dropdown.classList.remove('opacity-0', 'scale-95');
+                }, 10);
+            } else {
+                dropdown.classList.add('opacity-0', 'scale-95');
+                setTimeout(() => {
+                    dropdown.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        // WISHLIST LOGIC
+        function toggleWishlist(productId) {
+            const index = wishlist.indexOf(productId);
+            if (index > -1) {
+                wishlist.splice(index, 1);
+                showToast("Wishlist Updated", "Item removed from wishlist.");
+            } else {
+                wishlist.push(productId);
+                showToast("Added to Wishlist ❤️", "Saved to your favorites.");
+            }
+            document.getElementById('wishlistBadge').innerText = wishlist.length;
+            renderProducts(currentCategory === 'All' ? products : products.filter(p => p.category.toLowerCase() === currentCategory.toLowerCase()));
+        }
+
+        function toggleWishlistModal() {
+            if (wishlist.length === 0) {
+                showToast("Wishlist Empty", "Click the heart icon on any card to save items.");
+                return;
+            }
+            const wishlistProducts = products.filter(p => wishlist.includes(p.id));
+            renderProducts(wishlistProducts);
+            showToast("Wishlist View", "Displaying your favorite saved items.");
+        }
+
+        // QUICK VIEW MODAL
+        function quickView(productId) {
+            const prod = products.find(p => p.id === productId);
+            const content = document.getElementById('quickViewContent');
+
+            content.innerHTML = `
+                <div class="relative h-64 sm:h-80 rounded-2xl overflow-hidden border border-gold-500/30">
+                    <img src="${prod.image}" class="w-full h-full object-cover">
+                </div>
+                <div class="space-y-4">
+                    <span class="inline-block bg-gold-500/20 text-gold-400 border border-gold-500/40 text-xs px-3 py-1 rounded-full font-bold">
+                        ${prod.karat}
+                    </span>
+                    <h3 class="text-2xl font-serif font-bold text-white">${prod.name}</h3>
+                    <p class="text-sm font-urdu text-gold-400">${prod.urduName}</p>
+                    <p class="text-xs text-gray-400 leading-relaxed">${prod.description}</p>
+                    <p class="text-2xl font-serif font-bold text-gold-gradient">${formatPrice(prod.price)}</p>
+                    
+                    <button onclick="addToCart(${prod.id}); closeQuickView();" class="w-full btn-gold-shine py-3 rounded-xl font-bold text-sm">
+                        Add to Shopping Bag <i class="fa-solid fa-bag-shopping ml-1"></i>
+                    </button>
+                </div>
+            `;
+
+            document.getElementById('quickViewModal').classList.remove('hidden');
+        }
+
+        function closeQuickView() {
+            document.getElementById('quickViewModal').classList.add('hidden');
+        }
+
+        // CHECKOUT PROCESS MODAL
+        function openCheckoutModal() {
+            if (cart.length === 0) {
+                showToast("Cart Empty", "Please add items to your cart before checking out.");
+                return;
+            }
+            const totalItems = cart.reduce((acc, item) => acc + item.qty, 0);
+            const subtotal = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+
+            document.getElementById('checkoutItemCount').innerText = totalItems;
+            document.getElementById('checkoutGrandTotal').innerText = formatPrice(subtotal);
+
+            if (currentUser) {
+                document.getElementById('checkoutName').value = currentUser.name;
+            }
+
+            document.getElementById('checkoutModal').classList.remove('hidden');
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkoutModal').classList.add('hidden');
+        }
+
+        function processCheckout(e) {
+            e.preventDefault();
+            cart = [];
+            updateCartUI();
+            closeCheckoutModal();
+            showToast("👑 Order Placed!", "Thank you for choosing AL.Faajr Jewellers. Our representative will contact you shortly.");
+        }
+
+        // AUTH SYSTEM
+        function openAuthModal(tab = 'signin') {
+            switchAuthTab(tab);
+            document.getElementById('authModal').classList.remove('hidden');
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.add('hidden');
+        }
+
+        function switchAuthTab(tab) {
+            const tabIn = document.getElementById('tabSignIn');
+            const tabUp = document.getElementById('tabSignUp');
+            const formIn = document.getElementById('signInForm');
+            const formUp = document.getElementById('signUpForm');
+
+            if (tab === 'signin') {
+                tabIn.className = "flex-1 pb-3 text-sm font-serif font-bold text-gold-400 border-b-2 border-gold-500 transition-all text-center";
+                tabUp.className = "flex-1 pb-3 text-sm font-serif font-bold text-gray-500 border-b-2 border-transparent transition-all text-center";
+                formIn.classList.remove('hidden');
+                formUp.classList.add('hidden');
+            } else {
+                tabUp.className = "flex-1 pb-3 text-sm font-serif font-bold text-gold-400 border-b-2 border-gold-500 transition-all text-center";
+                tabIn.className = "flex-1 pb-3 text-sm font-serif font-bold text-gray-500 border-b-2 border-transparent transition-all text-center";
+                formUp.classList.remove('hidden');
+                formIn.classList.add('hidden');
+            }
+        }
+
+        function handleSignIn(e) {
+            e.preventDefault();
+            const email = document.getElementById('signInEmail').value;
+            const name = email.split('@')[0];
+            currentUser = {
+                name: name.charAt(0).toUpperCase() + name.slice(1),
+                email: email
+            };
+            try { localStorage.setItem('alfaajr_user', JSON.stringify(currentUser)); } catch (err) { }
+
+            updateUserUI();
+            closeAuthModal();
+            showToast("✨ Welcome Back!", `Logged in as ${currentUser.name}`);
+        }
+
+        function handleSignUp(e) {
+            e.preventDefault();
+            const name = document.getElementById('signUpName').value;
+            const email = document.getElementById('signUpEmail').value;
+            currentUser = { name, email };
+            try { localStorage.setItem('alfaajr_user', JSON.stringify(currentUser)); } catch (err) { }
+
+            updateUserUI();
+            closeAuthModal();
+            showToast("👑 Welcome to AL.Faajr!", "Your royal member account has been registered.");
+        }
+
+        function logoutUser() {
+            currentUser = null;
+            try { localStorage.removeItem('alfaajr_user'); } catch (err) { }
+            updateUserUI();
+            showToast("Signed Out", "You have been logged out.");
+        }
+
+        function updateUserUI() {
+            const authBtnText = document.getElementById('authBtnText');
+            const authBtn = document.getElementById('authBtn');
+            const welcomeBanner = document.getElementById('welcomeBanner');
+            const userNameGreeting = document.getElementById('userNameGreeting');
+            const userAvatarChar = document.getElementById('userAvatarChar');
+
+            if (currentUser) {
+                authBtnText.innerText = currentUser.name;
+                authBtn.classList.add('border-gold-400', 'bg-gold-500/10');
+                userNameGreeting.innerText = currentUser.name;
+                userAvatarChar.innerText = currentUser.name.charAt(0).toUpperCase();
+                welcomeBanner.classList.remove('hidden');
+            } else {
+                authBtnText.innerText = 'Sign In';
+                authBtn.classList.remove('border-gold-400', 'bg-gold-500/10');
+                welcomeBanner.classList.add('hidden');
+            }
+        }
+
+        // TOAST NOTIFICATIONS
+        function showToast(title, message) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = "toast-animate bg-darkcard border border-gold-500/40 text-gray-200 p-4 rounded-2xl shadow-2xl backdrop-blur-md max-w-xs flex items-start gap-3 pointer-events-auto";
+
+            toast.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-gold-500/20 flex items-center justify-center text-gold-400 font-bold shrink-0">
+                    <i class="fa-solid fa-gem text-xs"></i>
+                </div>
+                <div class="flex-grow">
+                    <h5 class="text-xs font-serif font-bold text-gold-400">${title}</h5>
+                    <p class="text-[11px] text-gray-300 mt-0.5">${message}</p>
+                </div>
+            `;
+
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.remove();
+            }, 3500);
+        }
+
+        function animateParticles() {
+            const canvas = document.getElementById('particleCanvas');
+            const ctx = canvas.getContext('2d');
+
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+
+            const particles = Array.from({ length: 45 }, () => ({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 2 + 0.5,
+                speedY: Math.random() * 0.4 + 0.1,
+                alpha: Math.random() * 0.6 + 0.2
+            }));
+
+            function loop() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    p.y -= p.speedY;
+                    if (p.y < 0) p.y = canvas.height;
+
+                    ctx.fillStyle = `rgba(212, 175, 55, ${p.alpha})`;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+                requestAnimationFrame(loop);
+            }
+            loop();
+        }
+
+        // INIT APP ON LOAD
+        window.onload = function () {
+            try {
+                const savedUser = localStorage.getItem('alfaajr_user');
+                if (savedUser) {
+                    currentUser = JSON.parse(savedUser);
+                    updateUserUI();
+                }
+            } catch (e) { }
+
+            renderProducts(products);
+            animateParticles();
+        };
+    </script>
+</body>
+
+</html>
